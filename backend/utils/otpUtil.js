@@ -17,11 +17,11 @@ function hashOTP(otp) {
 // Sends an OTP email to the specified address
 async function sendOTPEmail(to, otp) {
   const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
+    host: config.SMTP.host,
+    port: config.SMTP.port,
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+      user: config.SMTP.user,
+      pass: config.SMTP.pass,
     },
   });
 
