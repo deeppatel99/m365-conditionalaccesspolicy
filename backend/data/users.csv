@@ -1,0 +1,3 @@
+id,first_name,last_name,company,email,domain,created_at,querycount,querymax,verified
+,,,,,,,,,
+eb89000c-4c5b-404b-af7b-313f5f19795c,Deep,Patel,Test,deeppatel7521@gmail.com,gmail.com,2025-07-17T16:14:13.364Z,0,10,true
