@@ -1,0 +1,11 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# OS junk
+.DS_Store
+
+# IDE junk
+.vscode/
+.idea/
+*.log 
