@@ -1,10 +1,12 @@
 import React from "react";
-import { Snackbar, Alert, AlertColor } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
+import { SnackbarSeverity } from "../context/SnackbarContext";
+import { AlertColor } from "@mui/material/Alert";
 
 interface GlobalSnackbarProps {
   open: boolean;
   message: string;
-  severity?: AlertColor;
+  severity?: SnackbarSeverity;
   onClose: () => void;
 }
 
@@ -30,7 +32,7 @@ const GlobalSnackbar: React.FC<GlobalSnackbarProps> = ({
     >
       <Alert
         onClose={onClose}
-        severity={severity}
+        severity={severity as AlertColor}
         sx={{
           width: "100%",
           fontSize: 18,

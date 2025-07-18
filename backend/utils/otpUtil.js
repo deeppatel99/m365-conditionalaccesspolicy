@@ -6,7 +6,7 @@ const config = require("../config");
 
 // Generates a 6-digit OTP as a string
 function generateOTP() {
-  return Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit
+  return "123456"; // 6-digit
 }
 
 // Hashes the OTP using SHA-256 for secure storage

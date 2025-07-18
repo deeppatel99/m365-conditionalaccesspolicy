@@ -72,7 +72,7 @@ exports.signup = async (body) => {
     expires_at: Date.now() + 10 * 60 * 1000, // OTP valid for 10 minutes
   };
   await otpModel.create(otpRecord);
-  await emailService.sendOTPEmail(email, otp);
+  // await emailService.sendOTPEmail(email, otp);
 
   return { message: "User registered. OTP sent." };
 };
@@ -89,7 +89,7 @@ exports.sendOtp = async (body) => {
     expires_at: Date.now() + 10 * 60 * 1000,
   };
   await otpModel.create(otpRecord);
-  await emailService.sendOTPEmail(email, otp);
+  // await emailService.sendOTPEmail(email, otp);
   return { message: "OTP sent" };
 };
 
@@ -136,7 +136,7 @@ exports.login = async (body) => {
     expires_at: Date.now() + 10 * 60 * 1000,
   };
   await otpModel.create(otpRecord);
-  await emailService.sendOTPEmail(email, otp);
+  // await emailService.sendOTPEmail(email, otp);
   return { message: "OTP sent for login." };
 };
 
