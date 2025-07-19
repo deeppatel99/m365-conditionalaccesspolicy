@@ -1,133 +1,63 @@
-# Inactive Users 90 Days – Full Stack App
+# Forsynse MVP – Unified Full Stack App
 
-This project contains a **Node.js/Express backend** and a **React (TypeScript) frontend** for lead capture, OTP email authentication, and a protected dashboard.
+This project is a full-stack application with a Node.js/Express backend and a React (TypeScript) frontend, now merged into a single, maintainable codebase.
 
 ## Folder Structure
 
+- `server.js` — Backend entry point
+- `controllers/` — Backend controllers
+- `services/` — Backend business logic
+- `models/` — Backend data models (CSV-based)
+- `routes/` — Backend API routes
+- `middlewares/` — Backend middleware (validation, rate limiting)
+- `utils/` — Shared backend utilities
+- `data/` — CSV data files
+- `config/` — Configuration files
+- `validations/` — Joi validation schemas
+- `src/` — React frontend source code
+- `public/` — React static assets
+
+## Getting Started
+
+### 1. Install dependencies
+
+From the root directory, run:
+
 ```
-project-root/
-  backend/
-  frontend/
+npm install
 ```
 
----
+### 2. Start the app (both backend and frontend)
 
-## Backend Setup
+```
+npm start
+```
 
-1. **Install dependencies:**
+- This will start both the backend (on http://localhost:5000) and the frontend (on http://localhost:3000) concurrently.
 
-   ```sh
-   cd backend
-   npm install
-   ```
+### 3. Development scripts
 
-2. **Configure environment variables:**
+- `npm run start:backend` — Start backend only
+- `npm run start:frontend` — Start frontend only
 
-   - Copy `.env.example` to `.env` and fill in your real SMTP credentials and any other required values.
-   - Example:
-     ```
-     PORT=5000
-     SMTP_HOST=smtp.example.com
-     SMTP_PORT=587
-     SMTP_USER=your@email.com
-     SMTP_PASS=yourpassword
-     RESTRICTED_DOMAINS=test.com,yahoo.com
-     ```
+## Environment Variables
 
-3. **Start the backend server:**
-   ```sh
-   npm start
-   ```
-   The backend will run on `http://localhost:5000` (or the port you set).
-
----
-
-## Frontend Setup
-
-1. **Install dependencies:**
-
-   ```sh
-   cd frontend
-   npm install
-   ```
-
-2. **Configure environment variables (if needed):**
-
-   - If your frontend needs to know the backend API URL, create a `.env` file in `frontend/`:
-     ```
-     REACT_APP_API_URL=http://localhost:3001/api
-     ```
-   - (Adjust the URL if your backend runs elsewhere.)
-
-3. **Start the frontend app:**
-   ```sh
-   npm start
-   ```
-   The frontend will run on `http://localhost:3000` by default.
-
----
+- Copy `.env.example` to `.env` and fill in your SMTP and other required values for backend email/OTP features.
 
 ## Notes
 
-- **Do not commit your `.env` files** with real secrets to version control.
-- If you see errors about missing dependencies, run `npm install` in the respective folder.
-- For production, you may want to use process managers (like PM2) and a reverse proxy (like Nginx).
+- All backend and frontend code is now in a single codebase for easy management.
+- Backend uses CSV files for data storage (see `data/` folder).
+- Frontend uses React with TypeScript and Material UI.
+- All API calls from the frontend are proxied to the backend using the `proxy` field in `package.json`.
+- Code is commented and organized for clarity and maintainability.
+
+## Best Practices
+
+- Keep backend and frontend logic modular and separated by folder.
+- Use the provided scripts for development and deployment.
+- Add shared code (e.g., types, utils) in a `shared/` folder if needed in the future.
 
 ---
 
-## Project Features
-
-- Lead capture with domain restriction
-- OTP email verification (SMTP required)
-- Protected dashboard
-- Modern, responsive UI (Material UI)
-- TypeScript for type safety
-
----
-
-## Contact
-
-For any issues or questions, please contact the developer.
-
----
-
-## Quick Start (Summary)
-
-1. **Install dependencies for both frontend and backend:**
-   ```sh
-   cd backend && npm install
-   cd ../frontend && npm install
-   ```
-2. **Start the backend:**
-   ```sh
-   cd backend
-   npm start
-   ```
-3. **Start the frontend:**
-   ```sh
-   cd frontend
-   npm start
-   ```
-
----
-
-## Troubleshooting
-
-- **Error: `react-scripts: command not found` (frontend)**
-
-  - Run `npm install` in the `frontend` directory.
-
-- **Error: `Cannot find module 'typescript'` (frontend)**
-
-  - Run `npm install typescript --save-dev` in the `frontend` directory.
-
-- **TypeScript error for Alert severity prop (frontend):**
-
-  - If you see an error like:
-    ```
-    Type 'string' is not assignable to type 'OverridableStringUnion<AlertColor, AlertPropsColorOverrides>'
-    ```
-    - Make sure to cast the prop: `severity={severity as AlertColor}` in your `GlobalSnackbar.tsx`.
-
-- **Error: `Cannot find module 'express'` (backend)**
-  - Run `npm install` in the `backend` directory.
+For any questions, contact the project maintainer.
