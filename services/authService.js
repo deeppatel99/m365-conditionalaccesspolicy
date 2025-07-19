@@ -84,6 +84,11 @@ exports.signup = async (body) => {
   await otpModel.create(otpRecord);
   await emailService.sendOTPEmail(email, otp); // Uncomment to enable email
 
+  // Send signup alert email after successful verification
+  if (user) {
+    await emailService.sendSignupAlert(user);
+  }
+
   return { message: "User registered. OTP sent." };
 };
 

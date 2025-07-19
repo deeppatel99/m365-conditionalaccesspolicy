@@ -10,6 +10,7 @@ import {
   createTheme,
   CssBaseline,
   Container,
+  Box,
 } from "@mui/material";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -24,24 +25,7 @@ import {
   SnackbarState,
   SnackbarSeverity,
 } from "./context/SnackbarContext";
-
-const theme = createTheme({
-  palette: {
-    mode: "light",
-    primary: {
-      main: "#1976d2",
-    },
-    secondary: {
-      main: "#9c27b0",
-    },
-    background: {
-      default: "#f4f6f8",
-    },
-  },
-  shape: {
-    borderRadius: 12,
-  },
-});
+import theme from "./theme";
 
 function App() {
   const [snackbar, setSnackbar] = useState<SnackbarState>({
@@ -86,19 +70,27 @@ function AppRoutes({ snackbar, handleClose }: AppRoutesProps) {
     <>
       <LoadingBackdrop open={loading} />
       <GlobalSnackbar {...snackbar} onClose={handleClose} />
-      <Container
-        maxWidth="sm"
-        sx={{ mt: { xs: 2, sm: 8 }, px: { xs: 0, sm: 2 } }}
-      >
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/verify" element={<Verify />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Container>
+      {location.pathname === "/dashboard" ? (
+        <Box sx={{ width: "100%", px: { xs: 0, sm: 4 }, py: { xs: 0, sm: 2 } }}>
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </Box>
+      ) : (
+        <Container
+          maxWidth="sm"
+          sx={{ mt: { xs: 2, sm: 8 }, px: { xs: 0, sm: 2 } }}
+        >
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/verify" element={<Verify />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Container>
+      )}
     </>
   );
 }

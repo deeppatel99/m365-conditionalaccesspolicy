@@ -12,6 +12,7 @@ module.exports = {
     port: process.env.SMTP_PORT,
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
+    signup_alert: process.env.SMTP_SIGNUP_ALERT
   },
   // List of email domains that are restricted from registering
   restrictedDomains: process.env.RESTRICTED_DOMAINS
