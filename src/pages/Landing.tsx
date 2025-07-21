@@ -16,12 +16,9 @@ const Landing: React.FC = () => {
       minHeight="100vh"
       px={2}
       sx={{
-        bgcolor: "background.default",
+        bgcolor: "transparent",
         borderRadius: 0,
         boxShadow: 0,
-        backgroundImage: `url(${heroBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
         position: "relative",
         overflow: "hidden",
       }}
@@ -34,20 +31,31 @@ const Landing: React.FC = () => {
           left: 0,
           width: "100%",
           height: "100%",
-          bgcolor: "rgba(36, 41, 46, 0.45)",
-          backdropFilter: "blur(2px)",
+          bgcolor: "rgba(24,28,34,0.60)",
+          backdropFilter: "blur(10px)",
+          borderRadius: 2,
           zIndex: 1,
         }}
       />
-      {/* App Logo */}
+      {/* App Logo and content */}
       <Box
         sx={{
           position: "relative",
           zIndex: 2,
+          width: "100%",
+          maxWidth: 480,
+          mx: "auto",
+          bgcolor: "rgba(30,32,36,0.85)",
+          border: "1.5px solid rgba(255,255,255,0.08)",
+          boxShadow: "0 8px 32px 0 rgba(31,38,135,0.18)",
+          borderRadius: 3.5,
+          backdropFilter: "blur(8px)",
+          p: { xs: 3, sm: 5 },
+          mt: { xs: 2, sm: 8 },
+          mb: { xs: 2, sm: 8 },
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          width: "100%",
         }}
       >
         <img
@@ -56,15 +64,24 @@ const Landing: React.FC = () => {
           style={{
             width: 180,
             height: "auto",
-            marginBottom: 28,
+            marginBottom: 32,
             borderRadius: 12,
             boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
           }}
         />
-        {/* App Description */}
+        <Typography
+          variant="h4"
+          color="#e0e7ef"
+          fontWeight={800}
+          letterSpacing={1.2}
+          mb={3}
+          textAlign="center"
+        >
+          Welcome to ForSynse
+        </Typography>
         <Typography
           variant="subtitle1"
-          color="#e0e7ef"
+          color="#bdbdbd"
           mb={4}
           textAlign="center"
           sx={{ maxWidth: 420 }}
@@ -73,7 +90,6 @@ const Landing: React.FC = () => {
           <br />
           Fast, simple, and secure onboarding.
         </Typography>
-        {/* Signup Button */}
         <Button
           variant="contained"
           size="large"
@@ -85,13 +101,19 @@ const Landing: React.FC = () => {
             borderRadius: 3,
             fontWeight: 700,
             fontSize: 18,
-            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+            boxShadow: "0 2px 8px rgba(52,175,69,0.18)",
+            letterSpacing: 0.5,
+            background: "linear-gradient(90deg, #34af45 0%, #60a5fa 100%)",
+            transition: "background 0.2s, box-shadow 0.2s",
+            "&:hover": {
+              background: "linear-gradient(90deg, #218c36 0%, #2563eb 100%)",
+              boxShadow: "0 4px 16px rgba(52,175,69,0.22)",
+            },
           }}
           onClick={() => navigate("/signup")}
         >
           Get Started
         </Button>
-        {/* Login Button */}
         <Button
           variant="outlined"
           size="large"
@@ -102,11 +124,13 @@ const Landing: React.FC = () => {
             borderRadius: 3,
             fontWeight: 600,
             fontSize: 18,
-            color: "#fff",
-            borderColor: "#fff",
+            color: "#e0e7ef",
+            borderColor: "#60a5fa",
+            letterSpacing: 0.5,
             "&:hover": {
-              borderColor: "#fff",
-              background: "rgba(255,255,255,0.08)",
+              borderColor: "#34af45",
+              color: "#34af45",
+              background: "rgba(52,175,69,0.08)",
             },
           }}
           onClick={() => navigate("/login")}

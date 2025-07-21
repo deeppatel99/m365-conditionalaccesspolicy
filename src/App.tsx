@@ -22,9 +22,10 @@ import {
   SnackbarState,
   SnackbarSeverity,
 } from "./context/SnackbarContext";
+import bgImage from "./assets/logokit/fs-bkg-1440.png";
 
 function App() {
-  const theme = getTheme("light");
+  const theme = getTheme("light"); // or "dark" if you want dark mode
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -35,14 +36,38 @@ function App() {
   const handleClose = () => setSnackbar((s) => ({ ...s, open: false }));
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <SnackbarContext.Provider value={{ showMessage }}>
-        <Router>
-          <Navbar />
-          <AppRoutes snackbar={snackbar} handleClose={handleClose} />
-          <Footer />
-        </Router>
-      </SnackbarContext.Provider>
+      {/* Blurry background image */}
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          zIndex: 0,
+          background: `url(${bgImage}) center center / cover no-repeat`,
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            bgcolor: "rgba(24,28,34,0.60)",
+            backdropFilter: "blur(1px)",
+            zIndex: 1,
+          },
+        }}
+      />
+      <Box sx={{ position: "relative", zIndex: 2 }}>
+        <SnackbarContext.Provider value={{ showMessage }}>
+          <Router>
+            <Navbar />
+            <AppRoutes snackbar={snackbar} handleClose={handleClose} />
+            <Footer />
+          </Router>
+        </SnackbarContext.Provider>
+      </Box>
     </ThemeProvider>
   );
 }

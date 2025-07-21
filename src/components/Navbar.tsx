@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate, useLocation } from "react-router-dom";
-import logo from "../assets/logokit/Forsynse logo_Bold_white.svg";
+import logo from "../assets/logokit/Forsynse logo_Bold_white.png";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import api from "../utils/api";
 // Remove ColorModeContext import and any usage
@@ -99,6 +99,7 @@ const Navbar: React.FC = () => {
           justifyContent: "space-between",
           minHeight: 96,
           px: { xs: 2, sm: 8 },
+          fontFamily: "Nunito, Nunito Sans, sans-serif",
         }}
       >
         <Box
@@ -139,9 +140,13 @@ const Navbar: React.FC = () => {
                     textTransform: "none",
                     letterSpacing: 0.2,
                     color: "#fff",
+                    transition: "background 0.2s, box-shadow 0.2s",
+                    borderRadius: 2,
                     "&:hover": {
-                      color: "#34af45",
-                      background: "transparent",
+                      color: "#fff",
+                      background:
+                        "linear-gradient(90deg, #218c36 0%, #2563eb 100%)",
+                      boxShadow: "0 4px 16px rgba(52,175,69,0.22)",
                     },
                   }}
                 >
@@ -161,9 +166,13 @@ const Navbar: React.FC = () => {
                     textTransform: "none",
                     letterSpacing: 0.2,
                     color: "#fff",
+                    transition: "background 0.2s, box-shadow 0.2s",
+                    borderRadius: 2,
                     "&:hover": {
-                      color: "#34af45",
-                      background: "transparent",
+                      color: "#fff",
+                      background:
+                        "linear-gradient(90deg, #218c36 0%, #2563eb 100%)",
+                      boxShadow: "0 4px 16px rgba(52,175,69,0.22)",
                     },
                   }}
                 >
@@ -184,10 +193,13 @@ const Navbar: React.FC = () => {
                   ml: 2,
                   boxShadow: "0 2px 8px rgba(52,175,69,0.10)",
                   textTransform: "none",
-                  fontSize: 20,
+                  fontSize: 15,
                   letterSpacing: 0.5,
+                  transition: "background 0.2s, box-shadow 0.2s",
                   "&:hover": {
-                    background: "#218c36",
+                    background:
+                      "linear-gradient(90deg, #218c36 0%, #2563eb 100%)",
+                    boxShadow: "0 4px 16px rgba(52,175,69,0.22)",
                   },
                 }}
               >
@@ -209,9 +221,13 @@ const Navbar: React.FC = () => {
                     textTransform: "none",
                     letterSpacing: 0.2,
                     color: "#fff",
+                    transition: "background 0.2s, box-shadow 0.2s",
+                    borderRadius: 2,
                     "&:hover": {
-                      color: "#34af45",
-                      background: "transparent",
+                      color: "#fff",
+                      background:
+                        "linear-gradient(90deg, #218c36 0%, #2563eb 100%)",
+                      boxShadow: "0 4px 16px rgba(52,175,69,0.22)",
                     },
                   }}
                 >
@@ -272,6 +288,19 @@ const Navbar: React.FC = () => {
                         onClick={() => {
                           navigate(link.path);
                           setDrawerOpen(false);
+                        }}
+                        sx={{
+                          borderRadius: 2,
+                          transition: "background 0.2s, box-shadow 0.2s",
+                          "&:hover": {
+                            background:
+                              "linear-gradient(90deg, #218c36 0%, #2563eb 100%)",
+                            color:
+                              link.label === "Dashboard"
+                                ? "#60a5fa"
+                                : "#34af45",
+                            boxShadow: "0 4px 16px rgba(52,175,69,0.22)",
+                          },
                         }}
                       >
                         <ListItemText primary={link.label} />

@@ -58,14 +58,11 @@ const Login: React.FC = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: `url(${heroBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        bgcolor: "transparent",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Overlay */}
       <Box
         sx={{
           position: "absolute",
@@ -73,8 +70,9 @@ const Login: React.FC = () => {
           left: 0,
           width: "100%",
           height: "100%",
-          bgcolor: "rgba(36, 41, 46, 0.45)",
-          backdropFilter: "blur(2px)",
+          bgcolor: "rgba(24,28,34,0.60)",
+          backdropFilter: "blur(10px)",
+          borderRadius: 2,
           zIndex: 1,
         }}
       />
@@ -106,17 +104,17 @@ const Login: React.FC = () => {
           fontWeight={700}
           letterSpacing={0.5}
           align="center"
+          sx={{
+            color: "#000"
+          }}
         >
           Login
         </Typography>
-        {/* Email Field */}
         <TextField
           label="Email"
           name="email"
           value={email}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setEmail(e.target.value)
-          }
+          onChange={(e) => setEmail(e.target.value)}
           error={!!error}
           helperText={error}
           fullWidth
@@ -125,7 +123,6 @@ const Login: React.FC = () => {
           autoComplete="email"
           sx={{ borderRadius: 2 }}
         />
-        {/* Submit Button */}
         <Button
           type="submit"
           variant="contained"
@@ -142,7 +139,6 @@ const Login: React.FC = () => {
         >
           {loading ? <CircularProgress size={24} /> : "Send OTP"}
         </Button>
-        {/* Link to Signup */}
         <Button
           onClick={() => navigate("/signup")}
           sx={{ mt: 1, borderRadius: 2, fontWeight: 600 }}

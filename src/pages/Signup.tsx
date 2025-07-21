@@ -47,7 +47,7 @@ const Signup: React.FC = () => {
       const check = await api.get(`/check-domain?email=${form.email}`);
       if (check.data.exists) {
         showMessage(
-          "A user from your company has already registered. Please contact support.",
+          "User has already registered an email at that domain.",
           "error"
         );
         setLoading(false);
@@ -83,14 +83,11 @@ const Signup: React.FC = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: `url(${heroBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        bgcolor: "transparent",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Overlay */}
       <Box
         sx={{
           position: "absolute",
@@ -98,8 +95,9 @@ const Signup: React.FC = () => {
           left: 0,
           width: "100%",
           height: "100%",
-          bgcolor: "rgba(36, 41, 46, 0.45)",
-          backdropFilter: "blur(2px)",
+          bgcolor: "rgba(24,28,34,0.60)",
+          backdropFilter: "blur(10px)",
+          borderRadius: 2,
           zIndex: 1,
         }}
       />
@@ -131,10 +129,12 @@ const Signup: React.FC = () => {
           fontWeight={700}
           letterSpacing={0.5}
           align="center"
+          sx={{
+            color: "#000"
+          }}
         >
           Sign Up
         </Typography>
-        {/* First Name Field */}
         <TextField
           label="First Name"
           name="firstName"
@@ -146,7 +146,6 @@ const Signup: React.FC = () => {
           margin="normal"
           sx={{ borderRadius: 2 }}
         />
-        {/* Last Name Field */}
         <TextField
           label="Last Name"
           name="lastName"
@@ -158,7 +157,6 @@ const Signup: React.FC = () => {
           margin="normal"
           sx={{ borderRadius: 2 }}
         />
-        {/* Company Field */}
         <TextField
           label="Company"
           name="company"
@@ -170,7 +168,6 @@ const Signup: React.FC = () => {
           margin="normal"
           sx={{ borderRadius: 2 }}
         />
-        {/* Email Field */}
         <TextField
           label="Email"
           name="email"
@@ -184,7 +181,6 @@ const Signup: React.FC = () => {
           autoComplete="email"
           sx={{ borderRadius: 2 }}
         />
-        {/* Submit Button */}
         <Button
           type="submit"
           variant="contained"
@@ -201,7 +197,6 @@ const Signup: React.FC = () => {
         >
           {loading ? <CircularProgress size={24} /> : "Sign Up"}
         </Button>
-        {/* Link to Login */}
         <Button
           onClick={() => navigate("/login")}
           sx={{ mt: 1, borderRadius: 2, fontWeight: 600 }}

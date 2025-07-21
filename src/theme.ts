@@ -1,99 +1,71 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, Theme } from "@mui/material/styles";
 
-export const getTheme = (mode: "light" | "dark") =>
+export const getTheme = (mode: "light" | "dark" = "dark"): Theme =>
   createTheme({
     palette: {
       mode,
       primary: {
-        main: mode === "dark" ? "#60a5fa" : "#2563eb",
+        main: "#34af45",
         contrastText: "#fff",
       },
       secondary: {
-        main: mode === "dark" ? "#bdbdbd" : "#28292c",
+        main: "#60a5fa",
         contrastText: "#fff",
       },
       background: {
-        default: mode === "dark" ? "#181a1b" : "#f3f6fb",
+        default: mode === "dark" ? "#181a1b" : "#f4f6fa",
         paper: mode === "dark" ? "#23272a" : "#fff",
       },
       text: {
-        primary: mode === "dark" ? "#f3f6fb" : "#22292f",
+        primary: mode === "dark" ? "#e0e7ef" : "#23272a",
         secondary: mode === "dark" ? "#bdbdbd" : "#42474c",
       },
-      success: {
-        main: "#34AF45",
-        contrastText: "#fff",
-      },
-      error: {
-        main: "#EF4444",
-        contrastText: "#fff",
-      },
-      warning: {
-        main: "#F59E42",
-        contrastText: "#fff",
-      },
-      info: {
-        main: "#3B82F6",
-        contrastText: "#fff",
-      },
-    },
-    shape: {
-      borderRadius: 16,
     },
     typography: {
-      fontFamily: [
-        "Nunito",
-        "Nunito Light",
-        "Inter",
-        "Roboto",
-        "Helvetica",
-        "Arial",
-        "sans-serif",
-      ].join(","),
-      h4: { fontWeight: 800, letterSpacing: 0.5 },
-      h5: { fontWeight: 700, letterSpacing: 0.2 },
-      h6: { fontWeight: 600 },
-      button: { textTransform: "none", fontWeight: 600 },
+      fontFamily: "Nunito, Nunito Sans, sans-serif",
+      fontWeightRegular: 400,
+      fontWeightBold: 700,
+      h5: { fontWeight: 700, letterSpacing: 0.5 },
+      h6: { fontWeight: 600, letterSpacing: 0.3 },
+      button: { fontWeight: 700, letterSpacing: 0.5 },
+    },
+    shape: {
+      borderRadius: 12,
     },
     components: {
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: 12,
-            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-            fontWeight: 600,
-            fontSize: 16,
-            padding: "10px 24px",
-            transition: "background 0.2s, box-shadow 0.2s",
-          },
-          containedPrimary: {
-            background:
-              mode === "dark"
-                ? "linear-gradient(90deg, #2563eb 0%, #60a5fa 100%)"
-                : "linear-gradient(90deg, #2563eb 0%, #60a5fa 100%)",
+            borderRadius: 8,
+            boxShadow: "0 2px 8px rgba(52,175,69,0.10)",
+            textTransform: "none",
+            fontWeight: 700,
           },
         },
       },
       MuiPaper: {
         styleOverrides: {
           root: {
-            borderRadius: 16,
-            boxShadow: "0 2px 16px rgba(0,0,0,0.06)",
-          },
-        },
-      },
-      MuiTextField: {
-        styleOverrides: {
-          root: {
             borderRadius: 12,
+            boxShadow: "0 2px 12px rgba(0,0,0,0.10)",
+            backgroundImage: "none",
           },
         },
       },
       MuiCard: {
         styleOverrides: {
           root: {
-            borderRadius: 20,
-            boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
+            borderRadius: 16,
+            boxShadow: "0 2px 16px rgba(0,0,0,0.12)",
+            backgroundImage: "none",
+          },
+        },
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            background: mode === "dark" ? "#23272a" : "#fff",
+            borderRadius: 8,
           },
         },
       },

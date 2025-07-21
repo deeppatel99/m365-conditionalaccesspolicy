@@ -29,7 +29,7 @@ import {
   outputBoxStyle,
   selectLabelStyle,
 } from "../styles/dashboardStyles";
-import dashboardBg from "../assets/logokit/forsynse1920-1080a.jpg";
+import dashboardBg from "../assets/logokit/fs-bkg-1440.png";
 import logo from "../assets/logokit/Forsynse logo_Bold_Black.svg";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useEffect } from "react";
@@ -54,6 +54,7 @@ const Dashboard: React.FC = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [showLoadingOverlay, setShowLoadingOverlay] = useState(false);
+  const [user, setUser] = useState<{ first_name?: string; name?: string }>({});
   const isSignedIn = useIsSignedIn()[0];
   const { showMessage } = React.useContext(SnackbarContext);
   // Remove useTheme import
@@ -62,6 +63,9 @@ const Dashboard: React.FC = () => {
     if (localStorage.getItem("auth") !== "true") {
       navigate("/login");
     }
+    // Load user from localStorage
+    const stored = JSON.parse(localStorage.getItem("user") || "{}") || {};
+    setUser(stored);
   }, [navigate]);
 
   // Removed the useEffect that overwrites localStorage user from Graph API
@@ -162,7 +166,7 @@ const Dashboard: React.FC = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `response.${fileExtension}`;
+    link.download = `InactiveUsers.${fileExtension}`;
     link.click();
     URL.revokeObjectURL(url);
     setExporting(false);
@@ -180,12 +184,9 @@ const Dashboard: React.FC = () => {
   return (
     <Box
       sx={{
-        bgcolor: "background.default",
+        bgcolor: "transparent",
         minHeight: "100vh",
         py: 0,
-        backgroundImage: `url(${dashboardBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
         position: "relative",
         overflow: "hidden",
       }}
@@ -199,8 +200,9 @@ const Dashboard: React.FC = () => {
           left: 0,
           width: "100%",
           height: "100%",
-          bgcolor: "rgba(36, 41, 46, 0.45)",
-          backdropFilter: "blur(2px)",
+          bgcolor: "rgba(24,28,34,0.60)",
+          backdropFilter: "blur(10px)",
+          borderRadius: 2,
           zIndex: 1,
         }}
       />
@@ -222,7 +224,6 @@ const Dashboard: React.FC = () => {
             position: "relative",
             overflow: "visible",
             bgcolor: "rgba(255,255,255,0.95)",
-            backdropFilter: "blur(2px)",
           }}
         >
           {/* Progress Indicator */}
@@ -316,7 +317,29 @@ const Dashboard: React.FC = () => {
                 ml={{ sm: 3, xs: 0 }}
                 mt={{ xs: 2, sm: 0 }}
               >
-                <Login />
+                <Box
+                  sx={{
+                    borderRadius: 3,
+                    fontWeight: 700,
+                    fontSize: 17,
+                    px: 3,
+                    py: 1.5,
+                    background: "#fff",
+                    color: "#22292f",
+                    border: "1.5px solid #e0e0e0",
+                    boxShadow: "none",
+                    transition: "background 0.2s, box-shadow 0.2s",
+                    display: "inline-block",
+                    cursor: "pointer",
+                    fontFamily: "Nunito, Nunito Sans, sans-serif",
+                    "&:hover": {
+                      background: "rgba(52,175,69,0.08)",
+                      boxShadow: "0 2px 8px rgba(52,175,69,0.10)",
+                    },
+                  }}
+                >
+                  <Login />
+                </Box>
               </Box>
             </Box>
             <Divider sx={{ mb: 3 }} />

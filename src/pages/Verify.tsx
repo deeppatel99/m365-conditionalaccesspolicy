@@ -34,12 +34,17 @@ const Verify: React.FC = () => {
       localStorage.setItem("auth", "true");
       // Fetch user info from OTP CSV and store in localStorage
       try {
-        const { data: user } = await api.get(`/auth/otp-user?email=${encodeURIComponent(email)}`);
+        const { data: user } = await api.get(
+          `/auth/otp-user?email=${encodeURIComponent(email)}`
+        );
         localStorage.setItem("user", JSON.stringify(user));
       } catch {
         // fallback: just store email
         if (email)
-          localStorage.setItem("user", JSON.stringify({ email: email.trim().toLowerCase() }));
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ email: email.trim().toLowerCase() })
+          );
       }
       showMessage("OTP verified! Welcome.", "success");
       navigate("/dashboard");
@@ -70,14 +75,11 @@ const Verify: React.FC = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: `url(${heroBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        bgcolor: "transparent",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Overlay */}
       <Box
         sx={{
           position: "absolute",
@@ -85,8 +87,9 @@ const Verify: React.FC = () => {
           left: 0,
           width: "100%",
           height: "100%",
-          bgcolor: "rgba(36, 41, 46, 0.45)",
-          backdropFilter: "blur(2px)",
+          bgcolor: "rgba(24,28,34,0.60)",
+          backdropFilter: "blur(10px)",
+          borderRadius: 2,
           zIndex: 1,
         }}
       />
@@ -118,6 +121,9 @@ const Verify: React.FC = () => {
           fontWeight={700}
           letterSpacing={0.5}
           align="center"
+          sx={{
+            color: "#000"
+          }}
         >
           Verify OTP
         </Typography>
