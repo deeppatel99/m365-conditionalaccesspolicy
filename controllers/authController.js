@@ -1,4 +1,5 @@
 const authService = require("../services/authService");
+const userModel = require("../models/userModel");
 
 // Handle user signup requests
 exports.signup = async (req, res) => {
@@ -47,5 +48,33 @@ exports.checkDomain = async (req, res) => {
     res.json(result);
   } catch (err) {
     res.status(err.status || 500).json({ error: err.message });
+  }
+};
+
+// Fetch user details by email
+exports.getUserByEmail = async (req, res) => {
+  try {
+    const email = req.query.email;
+    if (!email) return res.status(400).json({ error: "Email is required" });
+    const user = await userModel.findByEmail(email);
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Fetch OTP user details by email (first layer only)
+exports.getOtpUserByEmail = async (req, res) => {
+  try {
+    const email = req.query.email;
+    if (!email) return res.status(400).json({ error: "Email is required" });
+    const user = await userModel.findByEmail(email);
+    if (!user) return res.status(404).json({ error: "User not found" });
+    // Only return first_name, last_name, company, email, verified
+    const { first_name, last_name, company, email: userEmail, verified } = user;
+    res.json({ first_name, last_name, company, email: userEmail, verified });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };

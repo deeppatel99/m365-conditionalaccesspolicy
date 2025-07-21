@@ -5,6 +5,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { SnackbarContext } from "../context/SnackbarContext";
 import api from "../utils/api";
 import OtpInput from "../components/OtpInput";
+import heroBg from "../assets/logokit/fs-bkg-1440.png";
+import logo from "../assets/logokit/Forsynse logo_Bold_Black.svg";
+import { callGraphApi } from "../graph";
+import { GRAPH_ENDPOINTS } from "../graphEndpoints";
 
 const Verify: React.FC = () => {
   const [otp, setOtp] = useState<string>("");
@@ -28,6 +32,15 @@ const Verify: React.FC = () => {
       // Call verify-otp API
       await api.post("/verify-otp", { email, otp });
       localStorage.setItem("auth", "true");
+      // Fetch user info from OTP CSV and store in localStorage
+      try {
+        const { data: user } = await api.get(`/auth/otp-user?email=${encodeURIComponent(email)}`);
+        localStorage.setItem("user", JSON.stringify(user));
+      } catch {
+        // fallback: just store email
+        if (email)
+          localStorage.setItem("user", JSON.stringify({ email: email.trim().toLowerCase() }));
+      }
       showMessage("OTP verified! Welcome.", "success");
       navigate("/dashboard");
     } catch (err: any) {
@@ -52,35 +65,85 @@ const Verify: React.FC = () => {
 
   return (
     <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{ mt: 2, p: 3, bgcolor: "white", borderRadius: 2, boxShadow: 2 }}
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundImage: `url(${heroBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        position: "relative",
+        overflow: "hidden",
+      }}
     >
-      <Typography variant="h5" mb={2} align="center">
-        Verify OTP
-      </Typography>
-      <Typography variant="body2" mb={2} align="center">
-        Enter the 6-digit code sent to <b>{email}</b>
-      </Typography>
-      {/* OTP Input Field */}
-      <OtpInput value={otp} onChange={setOtp} length={6} />
-      {/* Error Message */}
-      {error && (
-        <Typography color="error" align="center" mb={2}>
-          {error}
-        </Typography>
-      )}
-      {/* Submit Button */}
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        fullWidth
-        sx={{ mt: 2 }}
-        disabled={loading}
+      {/* Overlay */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          bgcolor: "rgba(36, 41, 46, 0.45)",
+          backdropFilter: "blur(2px)",
+          zIndex: 1,
+        }}
+      />
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          p: 4,
+          bgcolor: "rgba(255,255,255,0.95)",
+          borderRadius: 4,
+          boxShadow: 6,
+          maxWidth: 420,
+          mx: "auto",
+          width: "100%",
+          position: "relative",
+          zIndex: 2,
+        }}
       >
-        {loading ? <CircularProgress size={24} /> : "Verify"}
-      </Button>
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+          <img
+            src={logo}
+            alt="ForSynse Logo"
+            style={{ width: 80, height: "auto" }}
+          />
+        </Box>
+        <Typography
+          variant="h5"
+          mb={2}
+          fontWeight={700}
+          letterSpacing={0.5}
+          align="center"
+        >
+          Verify OTP
+        </Typography>
+        <OtpInput value={otp} onChange={setOtp} length={6} />
+        {error && (
+          <Typography color="error" mb={2}>
+            {error}
+          </Typography>
+        )}
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{
+            mt: 2,
+            borderRadius: 2,
+            fontWeight: 700,
+            fontSize: 17,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+          }}
+          disabled={loading}
+        >
+          {loading ? <CircularProgress size={24} /> : "Verify"}
+        </Button>
+      </Box>
     </Box>
   );
 };

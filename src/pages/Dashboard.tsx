@@ -11,6 +11,8 @@ import {
   FormControl,
   CircularProgress,
   TextField,
+  LinearProgress,
+  useTheme,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Login, useIsSignedIn } from "@microsoft/mgt-react";
@@ -27,6 +29,10 @@ import {
   outputBoxStyle,
   selectLabelStyle,
 } from "../styles/dashboardStyles";
+import dashboardBg from "../assets/logokit/forsynse1920-1080a.jpg";
+import logo from "../assets/logokit/Forsynse logo_Bold_Black.svg";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { useEffect } from "react";
 
 const exportFormats = [
   { value: "json", label: "JSON" },
@@ -50,12 +56,15 @@ const Dashboard: React.FC = () => {
   const [showLoadingOverlay, setShowLoadingOverlay] = useState(false);
   const isSignedIn = useIsSignedIn()[0];
   const { showMessage } = React.useContext(SnackbarContext);
+  // Remove useTheme import
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (localStorage.getItem("auth") !== "true") {
       navigate("/login");
     }
   }, [navigate]);
+
+  // Removed the useEffect that overwrites localStorage user from Graph API
 
   const handleLogout = () => {
     localStorage.removeItem("auth");
@@ -169,17 +178,80 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <Box sx={{ bgcolor: "#f4f6f8", minHeight: "100vh", py: 0 }}>
-      {/* Main Card */}
-      <Box sx={{ maxWidth: 1200, mx: "auto", mt: 5, position: "relative" }}>
+    <Box
+      sx={{
+        bgcolor: "background.default",
+        minHeight: "100vh",
+        py: 0,
+        backgroundImage: `url(${dashboardBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        position: "relative",
+        overflow: "hidden",
+      }}
+      aria-label="Dashboard Page"
+    >
+      {/* Overlay */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          bgcolor: "rgba(36, 41, 46, 0.45)",
+          backdropFilter: "blur(2px)",
+          zIndex: 1,
+        }}
+      />
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 2,
+          maxWidth: 1200,
+          mx: "auto",
+          mt: 5,
+        }}
+      >
         <Card
           sx={{
-            borderRadius: 3,
-            boxShadow: 3,
+            borderRadius: 4,
+            boxShadow: 6,
             px: { xs: 2, sm: 6, md: 8 },
             py: { xs: 2, sm: 5 },
+            position: "relative",
+            overflow: "visible",
+            bgcolor: "rgba(255,255,255,0.95)",
+            backdropFilter: "blur(2px)",
           }}
         >
+          {/* Progress Indicator */}
+          {isFetching && (
+            <LinearProgress sx={{ mb: 2 }} aria-label="Loading Progress" />
+          )}
+          {/* Logo at top left */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: -36,
+              left: 24,
+              bgcolor: "background.default",
+              borderRadius: 2,
+              p: 1,
+              boxShadow: 2,
+            }}
+          >
+            <img
+              src={logo}
+              alt="ForSynse Logo"
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: 8,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+              }}
+            />
+          </Box>
           {showLoadingOverlay && (
             <Box
               sx={{
@@ -268,19 +340,28 @@ const Dashboard: React.FC = () => {
                     fontSize: 16,
                   },
                   disableUnderline: true,
+                  "aria-label": "Console Output",
                 }}
                 variant="standard"
                 sx={{ border: "none" }}
                 placeholder="Results will appear here after you submit an action."
               />
+              {/* Empty State */}
               {!response && (
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mt: 2, textAlign: "center" }}
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  justifyContent="center"
+                  mt={4}
                 >
-                  No data yet. Please select an action and click Submit.
-                </Typography>
+                  <PersonOutlineIcon
+                    sx={{ fontSize: 64, color: "#bdbdbd", mb: 2 }}
+                  />
+                  <Typography variant="body1" color="text.secondary">
+                    No data yet. Please select an action and click Submit.
+                  </Typography>
+                </Box>
               )}
             </Box>
             <Box display="flex" alignItems="center" justifyContent="flex-end">

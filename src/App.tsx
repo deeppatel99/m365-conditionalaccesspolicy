@@ -1,17 +1,13 @@
-import React, { useState, createContext, ReactNode } from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
-import {
-  ThemeProvider,
-  createTheme,
-  CssBaseline,
-  Container,
-  Box,
-} from "@mui/material";
+import { ThemeProvider, CssBaseline, Container, Box } from "@mui/material";
+import { getTheme } from "./theme";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Verify from "./pages/Verify";
@@ -20,15 +16,16 @@ import GlobalSnackbar from "./components/GlobalSnackbar";
 import LoadingBackdrop from "./components/LoadingBackdrop";
 import Landing from "./pages/Landing";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import {
   SnackbarContext,
   SnackbarState,
   SnackbarSeverity,
 } from "./context/SnackbarContext";
-import theme from "./theme";
 
 function App() {
-  const [snackbar, setSnackbar] = useState<SnackbarState>({
+  const theme = getTheme("light");
+  const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "info",
@@ -36,7 +33,6 @@ function App() {
   const showMessage = (message: string, severity: SnackbarSeverity = "info") =>
     setSnackbar({ open: true, message, severity });
   const handleClose = () => setSnackbar((s) => ({ ...s, open: false }));
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -44,11 +40,14 @@ function App() {
         <Router>
           <Navbar />
           <AppRoutes snackbar={snackbar} handleClose={handleClose} />
+          <Footer />
         </Router>
       </SnackbarContext.Provider>
     </ThemeProvider>
   );
 }
+
+export default App;
 
 interface AppRoutesProps {
   snackbar: SnackbarState;
@@ -57,7 +56,6 @@ interface AppRoutesProps {
 
 function AppRoutes({ snackbar, handleClose }: AppRoutesProps) {
   const [loading, setLoading] = useState(false);
-  const { useLocation } = require("react-router-dom");
   const location = useLocation();
 
   React.useEffect(() => {
@@ -95,4 +93,16 @@ function AppRoutes({ snackbar, handleClose }: AppRoutesProps) {
   );
 }
 
-export default App;
+function AnimatedRoutes({ snackbar, handleClose }: AppRoutesProps) {
+  const location = useLocation();
+  return (
+    <Routes location={location}>
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/" element={<Landing />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/verify" element={<Verify />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}

@@ -31,4 +31,10 @@ router.post("/login", validate(loginSchema), authController.login);
 // Check if a domain already has a registered user
 router.get("/check-domain", authController.checkDomain);
 
+// Fetch user details by email
+router.get("/user", authController.getUserByEmail);
+
+// Fetch OTP user details by email (first layer only)
+router.get("/otp-user", authController.getOtpUserByEmail);
+
 module.exports = router;

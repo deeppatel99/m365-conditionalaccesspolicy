@@ -27,6 +27,8 @@ const GlobalSnackbar: React.FC<GlobalSnackbarProps> = ({
           minWidth: 400,
           fontSize: 18,
           fontWeight: 500,
+          borderRadius: 12,
+          boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
         },
       }}
     >
@@ -36,7 +38,9 @@ const GlobalSnackbar: React.FC<GlobalSnackbarProps> = ({
         sx={{
           width: "100%",
           fontSize: 18,
-          fontWeight: 500,
+          fontWeight: 600,
+          borderRadius: 10,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
           ...(severity === "success" && {
             bgcolor: "success.main",
             color: "white",

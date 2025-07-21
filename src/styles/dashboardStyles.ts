@@ -23,7 +23,7 @@ export const actionControlsStyle = {
 };
 
 export const outputBoxStyle = {
-  background: "#f9fafb",
+  background: "#f4f6fa", // light gray background (a bit more gray than white)
   border: "1px solid #e0e0e0",
   borderRadius: 2,
   p: 3,
@@ -33,6 +33,9 @@ export const outputBoxStyle = {
   overflow: "auto",
   transition: "box-shadow 0.2s",
   boxShadow: 1,
+  color: "#23272a", // dark text for readability
+  fontFamily: "Fira Mono, Menlo, Monaco, Consolas, monospace",
+  fontSize: 15,
   ":hover": { boxShadow: 4 },
 };
 

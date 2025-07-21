@@ -9,9 +9,14 @@ const {
 // Path to the users CSV file
 const usersFile = path.join(__dirname, "../data/users.csv");
 
-// Find a user by email
+// Find a user by email (case-insensitive, trimmed)
 exports.findByEmail = async (email) => {
-  return await findRecord(usersFile, "email", email);
+  const users = await readCSV(usersFile);
+  return users.find(
+    (user) =>
+      user.email &&
+      user.email.trim().toLowerCase() === email.trim().toLowerCase()
+  );
 };
 
 // Find a user by domain

@@ -12,6 +12,8 @@ import { SnackbarContext } from "../context/SnackbarContext";
 import api from "../utils/api";
 import { SignupForm, SignupErrors } from "../types/forms";
 import { validateSignup } from "../utils/validation";
+import heroBg from "../assets/logokit/fs-bkg-1440.png";
+import logo from "../assets/logokit/Forsynse logo_Bold_Black.svg";
 
 // Initial form state
 const initialState: SignupForm = {
@@ -58,6 +60,11 @@ const Signup: React.FC = () => {
         company: form.company,
         email: form.email,
       });
+      // Store email for Navbar API fetch
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ email: form.email.trim().toLowerCase() })
+      );
       showMessage("Signup successful! OTP sent to your email.", "success");
       navigate("/verify", { state: { email: form.email } });
     } catch (err: any) {
@@ -71,74 +78,138 @@ const Signup: React.FC = () => {
 
   return (
     <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{ mt: 2, p: 3, bgcolor: "white", borderRadius: 2, boxShadow: 2 }}
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundImage: `url(${heroBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        position: "relative",
+        overflow: "hidden",
+      }}
     >
-      <Typography variant="h5" mb={2}>
-        Sign Up
-      </Typography>
-      {/* First Name Field */}
-      <TextField
-        label="First Name"
-        name="firstName"
-        value={form.firstName}
-        onChange={handleChange}
-        error={!!errors.firstName}
-        helperText={errors.firstName}
-        fullWidth
-        margin="normal"
+      {/* Overlay */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          bgcolor: "rgba(36, 41, 46, 0.45)",
+          backdropFilter: "blur(2px)",
+          zIndex: 1,
+        }}
       />
-      {/* Last Name Field */}
-      <TextField
-        label="Last Name"
-        name="lastName"
-        value={form.lastName}
-        onChange={handleChange}
-        error={!!errors.lastName}
-        helperText={errors.lastName}
-        fullWidth
-        margin="normal"
-      />
-      {/* Company Field */}
-      <TextField
-        label="Company"
-        name="company"
-        value={form.company}
-        onChange={handleChange}
-        error={!!errors.company}
-        helperText={errors.company}
-        fullWidth
-        margin="normal"
-      />
-      {/* Email Field */}
-      <TextField
-        label="Email"
-        name="email"
-        value={form.email}
-        onChange={handleChange}
-        error={!!errors.email}
-        helperText={errors.email}
-        fullWidth
-        margin="normal"
-        type="email"
-        autoComplete="email"
-      />
-      {/* Submit Button */}
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        fullWidth
-        sx={{ mt: 2 }}
-        disabled={loading}
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          p: 4,
+          bgcolor: "rgba(255,255,255,0.95)",
+          borderRadius: 4,
+          boxShadow: 6,
+          maxWidth: 420,
+          mx: "auto",
+          width: "100%",
+          position: "relative",
+          zIndex: 2,
+        }}
       >
-        {loading ? <CircularProgress size={24} /> : "Sign Up"}
-      </Button>
-      {/* Link to Login */}
-      <Button onClick={() => navigate("/login")} sx={{ mt: 1 }} fullWidth>
-        Already have an account? Log in
-      </Button>
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+          <img
+            src={logo}
+            alt="ForSynse Logo"
+            style={{ width: 80, height: "auto" }}
+          />
+        </Box>
+        <Typography
+          variant="h5"
+          mb={2}
+          fontWeight={700}
+          letterSpacing={0.5}
+          align="center"
+        >
+          Sign Up
+        </Typography>
+        {/* First Name Field */}
+        <TextField
+          label="First Name"
+          name="firstName"
+          value={form.firstName}
+          onChange={handleChange}
+          error={!!errors.firstName}
+          helperText={errors.firstName}
+          fullWidth
+          margin="normal"
+          sx={{ borderRadius: 2 }}
+        />
+        {/* Last Name Field */}
+        <TextField
+          label="Last Name"
+          name="lastName"
+          value={form.lastName}
+          onChange={handleChange}
+          error={!!errors.lastName}
+          helperText={errors.lastName}
+          fullWidth
+          margin="normal"
+          sx={{ borderRadius: 2 }}
+        />
+        {/* Company Field */}
+        <TextField
+          label="Company"
+          name="company"
+          value={form.company}
+          onChange={handleChange}
+          error={!!errors.company}
+          helperText={errors.company}
+          fullWidth
+          margin="normal"
+          sx={{ borderRadius: 2 }}
+        />
+        {/* Email Field */}
+        <TextField
+          label="Email"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+          error={!!errors.email}
+          helperText={errors.email}
+          fullWidth
+          margin="normal"
+          type="email"
+          autoComplete="email"
+          sx={{ borderRadius: 2 }}
+        />
+        {/* Submit Button */}
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{
+            mt: 2,
+            borderRadius: 2,
+            fontWeight: 700,
+            fontSize: 17,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+          }}
+          disabled={loading}
+        >
+          {loading ? <CircularProgress size={24} /> : "Sign Up"}
+        </Button>
+        {/* Link to Login */}
+        <Button
+          onClick={() => navigate("/login")}
+          sx={{ mt: 1, borderRadius: 2, fontWeight: 600 }}
+          fullWidth
+        >
+          Already have an account? Log in
+        </Button>
+      </Box>
     </Box>
   );
 };

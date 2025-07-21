@@ -1,11 +1,26 @@
 body {
   margin: 0;
   padding: 0;
-  background: #f4f6f8;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  background: #f7fafc;
+  font-family: "Inter", "Roboto", "Helvetica", "Arial", sans-serif;
+  color: #1a202c;
+  transition: background 0.3s, color 0.3s;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #e5e7eb;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 8px;
 }
